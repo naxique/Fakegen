@@ -7,7 +7,6 @@ interface TableProps {
 }
 
 const TableComponent = ({ users }: TableProps) => {
-  // TODO: infinite scrolling
   return (
     <>
       <Table className={ styles.tableStyle } striped bordered hover>
