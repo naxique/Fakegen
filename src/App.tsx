@@ -126,11 +126,15 @@ function App() {
   };
 
   const makeMistake = (input: string, seed: number): string => {
-    const mistakeChance = faker.datatype.number({ min: 1, max: 1000 });
-    if (mistakeChance < 100 && mistakeChance < options.mistake) {
-      return mistake(input, seed);
-    } else if (mistakeChance > 100 && mistakeChance < options.mistake) {
-      return mistake(input, seed, Math.floor(mistakeChance/100));
+    const mistakeChance = faker.datatype.number({ min: 1, max: 100 });
+    if (options.mistake < 100) {
+      if (mistakeChance < options.mistake)
+        return mistake(input, seed);
+    } else if (options.mistake > 100) {
+      let iterations = Math.floor(options.mistake/100);
+      let chance = ((options.mistake/100)-iterations) * 100;
+      if (mistakeChance < chance) iterations++;
+      return mistake(input, seed, iterations);
     }
     return input;
   };
