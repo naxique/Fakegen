@@ -46,8 +46,8 @@ function App() {
 
   const handleCustomMistakeRateChange = (e: any) => {
     if (e.target.value > 1000) return;
-    setMistakeRate(e.target.value/100);
-    setOptions({...options, mistake: e.target.value});
+    setMistakeRate(e.target.value);
+    setOptions({...options, mistake: e.target.value*100});
   }
 
   const generateRandomSeed = () => {
@@ -87,7 +87,7 @@ function App() {
 
   const generateLocaleSymbol = (): string => {
     const latinDictionary = "QWERTYUIOP[]ASDFGHJKL;'ZXCVBM,./qwertyuio+pasdfghjkl-=zxcvbnm";
-    const cyrillicDictionary = "ЙЦУКЕНГШЩЗХЪ/ФЫВАПРОЛДЖЭЯЧСМИТЬБЮ.йцукенгшщзхъ-=фывапролджэ+ячсмитьбю.";
+    const cyrillicDictionary = "ЙЦУКЕНГШЩЗХЪ/ФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,йцукенгшщзхъ-=фывапролджэ+ячсмитьбю.";
     if (options.region === regionEnum.us || options.region === regionEnum.de) {
       let i = faker.datatype.number(latinDictionary.length);
       return latinDictionary.slice(i, i+1);
@@ -184,9 +184,9 @@ function App() {
           <Col xs="3">
             <Form.Group controlId="mistake">
               <Form.Label>Mistake rate: {mistakeRate} </Form.Label>
-              <Form.Range defaultValue={mistakeRate} min='0' max='10' step='0.25'
+              <Form.Range value={mistakeRate} min='0' max='10' step='0.25'
                           onChange={handleMistakeRateChange}/>
-              <Form.Control name="mistakeInput" value={options.mistake} onChange={handleCustomMistakeRateChange}/>
+              <Form.Control name="mistakeInput" value={mistakeRate} onChange={handleCustomMistakeRateChange}/>
             </Form.Group>
           </Col>
           <Col xs="3">
